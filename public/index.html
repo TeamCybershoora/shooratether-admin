@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SHOORA TETHER Enterprise Control | Admin Portal</title>
+  <link rel="stylesheet" href="css/admin.css?v=4">
+  <link rel="icon" href="shooratetherlogo.png">
+</head>
+<body>
+
+  <!-- Toast Notification Container -->
+  <div id="toastContainer" class="toast-container"></div>
+
+  <!-- Outer Floating Tablet Canvas (Translucent Frosted Glass) -->
+  <div class="app-container">
+
+    <!-- Left Floating Capsule Sidebar (Screen-fitted, independent of canvas scroll) -->
+    <aside class="sidebar">
+      <div>
+        <!-- Brand Header -->
+        <div class="brand-header">
+          <img src="shooratetherlogo.png" alt="Shoora Tether Logo" class="brand-logo-img" />
+          <div class="brand-text-block">
+            <span class="brand-title">SHOORA TETHER</span>
+            <span class="brand-subtitle">Enterprise Cloud</span>
+          </div>
+        </div>
+
+        <!-- Sidebar Navigation Menu -->
+        <nav class="nav-menu">
+          <span class="nav-group-title">Main Menu</span>
+
+          <button id="tabOverviewBtn" class="nav-item active">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="3" width="7" height="7"/>
+              <rect x="14" y="3" width="7" height="7"/>
+              <rect x="14" y="14" width="7" height="7"/>
+              <rect x="3" y="14" width="7" height="7"/>
+            </svg>
+            <span>Overview</span>
+          </button>
+
+          <button id="tabUsersNavBtn" class="nav-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+              <circle cx="9" cy="7" r="4"/>
+              <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+              <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+            </svg>
+            <span>Users Directory</span>
+          </button>
+
+          <button id="tabPaymentsNavBtn" class="nav-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+              <line x1="1" y1="10" x2="23" y2="10"/>
+            </svg>
+            <span>Payments Ledger</span>
+          </button>
+
+          <span class="nav-group-title">Platform &amp; AI</span>
+
+          <button id="tabAiGatewayNavBtn" class="nav-item">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+            </svg>
+            <span>AI Models &amp; Keys</span>
+          </button>
+        </nav>
+      </div>
+
+      <!-- Sidebar Footer -->
+      <div class="sidebar-footer">
+        <div class="system-status-pill" title="Production StackCP MySQL Database Connected">
+          <span class="status-dot"></span>
+          <span>StackCP DB Online</span>
+        </div>
+
+        <button id="logoutBtn" class="sidebar-signout-btn" title="Sign Out">
+          <span>Sign Out</span>
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/>
+            <polyline points="16 17 21 12 16 7"/>
+            <line x1="21" y1="12" x2="9" y2="12"/>
+          </svg>
+        </button>
+      </div>
+    </aside>
+
+    <!-- Main Scrollable Canvas (Content slides up and down independently) -->
+    <main class="main-canvas">
+
+      <!-- Canvas Header Bar -->
+      <header class="canvas-header">
+        <div>
+          <h1 class="greeting-title" id="greetingTitle">Hi, Superadmin!</h1>
+          <p class="greeting-subtitle" id="greetingSubtitle">Shoora Tether Enterprise platform overview &amp; real-time telemetry.</p>
+        </div>
+
+        <div class="header-actions">
+          <button id="topSyncBtn" class="btn-create" title="Synchronize telemetry with backend">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="23 4 23 10 17 10"/>
+              <polyline points="1 20 1 14 7 14"/>
+              <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+            </svg>
+            <span>Sync Cloud</span>
+          </button>
+
+          <button class="btn-icon-circle" title="Platform Notifications" onclick="window.shooraAdmin?.showToast?.('Platform status: 100% services online and resilient.', 'success')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+            </svg>
+            <span class="notif-badge"></span>
+          </button>
+
+          <div class="admin-avatar-btn">
+            <div class="admin-circle-avatar" id="adminAvatarInitial">A</div>
+            <span class="admin-name-text" id="adminEmailDisplay">admin@cybershoora.com</span>
+          </div>
+        </div>
+      </header>
+
+      <!-- ================================================================= -->
+      <!-- VIEW 1: OVERVIEW ONLY (Clean Bento Grid)                          -->
+      <!-- ================================================================= -->
+      <div id="viewOverview" class="view-container">
+
+        <!-- Bento Row 1: KPI Statistics & Activity Sparkline & Gauge -->
+        <section class="bento-row-1">
+
+          <!-- Card 1: Dark Overall Information Bento Card (Translucent Glass) -->
+          <div class="dark-kpi-card">
+            <div class="dark-kpi-top">
+              <span class="dark-kpi-title">Overall Information</span>
+              <div class="dark-kpi-actions">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="1"/>
+                  <circle cx="19" cy="12" r="1"/>
+                  <circle cx="5" cy="12" r="1"/>
+                </svg>
+              </div>
+            </div>
+
+            <!-- Big Stat Numbers -->
+            <div class="big-numbers-row">
+              <div class="big-stat-wrap">
+                <span class="big-stat-val" id="kpiTotalUsers">--</span>
+                <span class="big-stat-lbl">Registered<br>Developers</span>
+              </div>
+              <div class="big-stat-wrap">
+                <span class="big-stat-val" id="kpiActiveSessions">--</span>
+                <span class="big-stat-lbl">Active IDE<br>Sessions</span>
+              </div>
+            </div>
+
+            <!-- 3 Translucent Rounded White Sub-tiles -->
+            <div class="dark-subcards-grid">
+              <div class="dark-subcard">
+                <div class="subcard-top">
+                  <span class="subcard-val" id="kpiProMini">--</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                  </svg>
+                </div>
+                <span class="subcard-lbl">Pro Tiers</span>
+              </div>
+
+              <div class="dark-subcard">
+                <div class="subcard-top">
+                  <span class="subcard-val" id="kpiTotalRevenueMini" style="color: #10B981;">₹0</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="12" y1="1" x2="12" y2="23"/>
+                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                  </svg>
+                </div>
+                <span class="subcard-lbl">Gross Revenue</span>
+              </div>
+
+              <div class="dark-subcard">
+                <div class="subcard-top">
+                  <span class="subcard-val" id="kpiActiveUsersMini">--</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#3B82F6" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                    <polyline points="22 4 12 14.01 9 11.01"/>
+                  </svg>
+                </div>
+                <span class="subcard-lbl" id="kpiActiveSubtitle">Active Users</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Card 2: White Translucent Bento Card - Weekly Activity Sparkline Chart -->
+          <div class="white-bento-card">
+            <div class="bento-card-header">
+              <span class="bento-card-title">Weekly Activity</span>
+              <span class="badge-pill-pill">This Week</span>
+            </div>
+
+            <div class="chart-legend-row">
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <span class="legend-dot" style="background: #18181B;"></span>
+                <span>Desktop IDE Sync</span>
+              </div>
+              <div style="display: flex; align-items: center; gap: 6px;">
+                <span class="legend-dot" style="background: #94A3B8;"></span>
+                <span>AI Queries</span>
+              </div>
+            </div>
+
+            <!-- Sparkline SVG Curve -->
+            <div class="sparkline-wrap">
+              <svg viewBox="0 0 300 70" preserveAspectRatio="none" style="width: 100%; height: 100%; overflow: visible;">
+                <defs>
+                  <linearGradient id="curveGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" stop-color="#18181B" stop-opacity="0.12"/>
+                    <stop offset="100%" stop-color="#18181B" stop-opacity="0.0"/>
+                  </linearGradient>
+                </defs>
+                <path d="M 0 50 Q 50 15, 100 38 T 200 20 T 300 12 L 300 70 L 0 70 Z" fill="url(#curveGradient)"/>
+                <path d="M 0 50 Q 50 15, 100 38 T 200 20 T 300 12" fill="none" stroke="#18181B" stroke-width="2.5" stroke-linecap="round"/>
+                <circle cx="200" cy="20" r="4.5" fill="#18181B"/>
+                <circle cx="200" cy="20" r="2" fill="#FFFFFF"/>
+              </svg>
+            </div>
+
+            <!-- Days Row -->
+            <div class="chart-days-row">
+              <span>M</span>
+              <span>T</span>
+              <span>W</span>
+              <span class="chart-day active">T</span>
+              <span>F</span>
+              <span>S</span>
+              <span>S</span>
+            </div>
+          </div>
+
+          <!-- Card 3: White Translucent Bento Card - Subscription Tier Distribution Gauge -->
+          <div class="white-bento-card">
+            <div class="bento-card-header">
+              <span class="bento-card-title">Tier Distribution</span>
+              <span class="badge-pill-pill" id="kpiProCount">Pro / Free</span>
+            </div>
+
+            <div class="month-progress-layout">
+              <div class="gauge-circle-wrap">
+                <svg width="86" height="86" viewBox="0 0 86 86">
+                  <circle cx="43" cy="43" r="36" fill="none" stroke="#F1F5F9" stroke-width="7"/>
+                  <circle id="gaugeProgressCircle" cx="43" cy="43" r="36" fill="none" stroke="#18181B" stroke-width="7" 
+                          stroke-dasharray="226" stroke-dashoffset="65" stroke-linecap="round"
+                          transform="rotate(-90 43 43)" style="transition: stroke-dashoffset 0.8s ease;"/>
+                </svg>
+                <span class="gauge-center-text" id="gaugeProPercent">72%</span>
+              </div>
+
+              <div style="display: flex; flex-direction: column; gap: 6px;">
+                <div style="font-size: 11.5px; font-weight: 700; color: var(--text-dark);">Subscription Ratio</div>
+                <div style="font-size: 11px; color: var(--text-muted);">Pro + Team developer subscriptions outperforming Free tier conversion.</div>
+              </div>
+            </div>
+
+            <button class="btn-download-report" onclick="document.getElementById('tabPaymentsNavBtn').click();">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+                <line x1="1" y1="10" x2="23" y2="10"/>
+              </svg>
+              <span>View Payments Ledger &rarr;</span>
+            </button>
+          </div>
+
+        </section>
+
+        <!-- Bento Row 2: Platform Health & Active Processes -->
+        <section class="bento-row-2">
+
+          <!-- Goals Card -->
+          <div class="white-bento-card" style="min-height: auto;">
+            <div class="bento-card-header">
+              <span class="bento-card-title">Platform Health</span>
+              <span class="badge-pill-pill" style="color: #10B981; background: rgba(16, 185, 129, 0.1);">3 / 3 Operational</span>
+            </div>
+
+            <div class="goals-checklist">
+              <div class="goal-item">
+                <span class="goal-check-circle">✓</span>
+                <span>StackCP MySQL Production Database (Connected)</span>
+              </div>
+              <div class="goal-item">
+                <span class="goal-check-circle">✓</span>
+                <span>Shoora AI Gateway &amp; Model Routing (Active)</span>
+              </div>
+              <div class="goal-item">
+                <span class="goal-check-circle">✓</span>
+                <span>Razorpay Subscriptions &amp; Webhooks (Ready)</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Process Cards -->
+          <div class="white-bento-card" style="min-height: auto;">
+            <div class="bento-card-header">
+              <span class="bento-card-title">Active Processes</span>
+              <span class="badge-pill-pill">Live Daemons</span>
+            </div>
+
+            <div class="process-cards-grid">
+              <div class="process-card">
+                <div class="process-card-top">
+                  <span class="badge-pill-status active">Active</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+                </div>
+                <span class="process-card-title">Desktop IDE Cloud Sync</span>
+                <div class="process-card-footer">
+                  <span>Protocol v1.0</span>
+                  <span>Latency &lt;20ms</span>
+                </div>
+              </div>
+
+              <div class="process-card">
+                <div class="process-card-top">
+                  <span class="badge-pill-status ready">Ready</span>
+                  <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+                </div>
+                <span class="process-card-title">Token Quota Engine</span>
+                <div class="process-card-footer">
+                  <span>Multi-Tier</span>
+                  <span>Pro &amp; Custom</span>
+                </div>
+              </div>
+
+              <div class="process-card dashed" onclick="document.getElementById('tabUsersNavBtn').click();">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                  <circle cx="9" cy="7" r="4"/>
+                </svg>
+                <span>Manage Users &rarr;</span>
+              </div>
+            </div>
+          </div>
+
+        </section>
+
+      </div>
+
+      <!-- ================================================================= -->
+      <!-- VIEW 2: USERS DIRECTORY ONLY                                      -->
+      <!-- ================================================================= -->
+      <div id="viewUsers" class="view-container" style="display: none;">
+        <section class="table-bento-panel">
+          <div class="panel-header-row">
+            <div style="display: flex; align-items: center; gap: 12px;">
+              <h2 style="font-size: 17px; font-weight: 800; color: var(--text-dark);">Registered Users Directory</h2>
+              <span class="tab-counter-badge" id="totalUsersCountBadge" style="background: var(--card-dark); color: #fff; padding: 4px 10px;">Loading...</span>
+            </div>
+
+            <!-- Users Search & Refresh -->
+            <div class="table-controls">
+              <div class="search-box-wrap">
+                <svg class="search-icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="11" cy="11" r="8"/>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+                <input type="text" id="userSearchInput" class="search-text-input" placeholder="Search by name, email, or ID..." />
+              </div>
+
+              <button id="refreshUsersBtn" class="btn-refresh-circle" title="Refresh Users list">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="23 4 23 10 17 10"/>
+                  <polyline points="1 20 1 14 7 14"/>
+                  <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Table Responsive Container -->
+          <div class="data-table-wrap">
+            <table class="modern-table users-table">
+              <thead>
+                <tr>
+                  <th style="width: 70px;">ID</th>
+                  <th>USER PROFILE</th>
+                  <th>AUTH PROVIDER</th>
+                  <th>PLAN TIER</th>
+                  <th>STATUS</th>
+                  <th>ACTIVITY &amp; JOINED</th>
+                  <th style="text-align: right; width: 170px;">ACTIONS</th>
+                </tr>
+              </thead>
+              <tbody id="usersTableBody">
+                <tr>
+                  <td colspan="7" style="text-align: center; padding: 40px; color: var(--text-muted);">
+                    Connecting to StackCP MySQL Database...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Infinite Scroll Sentinel & Status Bar -->
+          <div id="usersScrollSentinel" style="height: 10px; width: 100%;"></div>
+          <div id="usersInfiniteStatus" class="infinite-scroll-status">
+            <span class="infinite-end-badge" id="usersCountBadgeBottom">Showing users...</span>
+          </div>
+        </section>
+      </div>
+
+      <!-- ================================================================= -->
+      <!-- VIEW 3: PAYMENTS LEDGER ONLY                                      -->
+      <!-- ================================================================= -->
+      <div id="viewPayments" class="view-container" style="display: none;">
+        <section class="table-bento-panel">
+          <div class="panel-header-row">
+            <div>
+              <h2 style="font-size: 17px; font-weight: 800; color: var(--text-dark);">Razorpay Payments &amp; Financial Ledger</h2>
+              <p style="font-size: 11.5px; color: var(--text-muted); margin-top: 2px;">Gross revenue and subscription checkout orders from Shoora Tether Web.</p>
+            </div>
+
+            <!-- Payments Search, Refresh & Export -->
+            <div class="table-controls">
+              <div class="search-box-wrap">
+                <svg class="search-icon-svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <circle cx="11" cy="11" r="8"/>
+                  <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+                <input type="text" id="paymentSearchInput" class="search-text-input" placeholder="Search by email, order ID, payment ID..." />
+              </div>
+
+              <button id="refreshPaymentsBtn" class="btn-refresh-circle" title="Refresh Transactions">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <polyline points="23 4 23 10 17 10"/>
+                  <polyline points="1 20 1 14 7 14"/>
+                  <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+                </svg>
+              </button>
+
+              <button id="downloadLedgerBtn" class="btn-create" style="padding: 8px 14px; font-size: 11.5px;">
+                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                  <polyline points="7 10 12 15 17 10"/>
+                  <line x1="12" y1="15" x2="12" y2="3"/>
+                </svg>
+                <span>Export CSV</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Table Responsive Container -->
+          <div class="data-table-wrap">
+            <table class="modern-table payments-table">
+              <thead>
+                <tr>
+                  <th style="width: 70px;">TXN #</th>
+                  <th>CUSTOMER</th>
+                  <th>PLAN TIER</th>
+                  <th>ORDER ID</th>
+                  <th>PAYMENT ID</th>
+                  <th>AMOUNT</th>
+                  <th>STATUS</th>
+                  <th style="text-align: right; width: 160px;">TIMESTAMP</th>
+                </tr>
+              </thead>
+              <tbody id="paymentsTableBody">
+                <tr>
+                  <td colspan="8" style="text-align: center; padding: 40px; color: var(--text-muted);">
+                    Loading Razorpay transactions ledger...
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Infinite Scroll Sentinel & Status Bar -->
+          <div id="paymentsScrollSentinel" style="height: 10px; width: 100%;"></div>
+          <div id="paymentsInfiniteStatus" class="infinite-scroll-status">
+            <span class="infinite-end-badge" id="paymentsCountBadgeBottom">Showing transactions...</span>
+          </div>
+        </section>
+      </div>
+
+      <!-- ================================================================= -->
+      <!-- VIEW 4: AI MODELS & GATEWAY ARCHITECTURE                          -->
+      <!-- ================================================================= -->
+      <div id="viewAiGateway" class="view-container" style="display: none;">
+        <section class="table-bento-panel">
+          <div style="margin-bottom: 24px;">
+            <h2 style="font-size: 18px; font-weight: 800; color: var(--text-dark);">AI Models &amp; Gateway Configuration</h2>
+            <p style="font-size: 12px; color: var(--text-muted); margin-top: 4px;">
+              Centralized AI proxy routing for Shoora Tether Desktop IDE. Models are authenticated against user tiers (Free vs Pro).
+            </p>
+          </div>
+
+          <!-- 3 Model Overview Cards -->
+          <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 24px;">
+            <div class="process-card" style="padding: 20px;">
+              <div class="process-card-top">
+                <span class="badge-pill-status active">Platform Model</span>
+                <span style="font-size: 11px; font-weight: 700; color: var(--accent-emerald);">Pro Tier</span>
+              </div>
+              <h3 style="font-size: 15px; font-weight: 800; margin: 12px 0 4px 0;">Gemini 2.5 Pro</h3>
+              <p style="font-size: 11.5px; color: var(--text-muted); line-height: 1.4;">
+                Full autonomous coding, multi-file refactoring, subagents. Allocated to paid Pro &amp; Team subscribers.
+              </p>
+              <div class="process-card-footer" style="margin-top: 14px;">
+                <span>Quota: 500k Tokens</span>
+                <span style="color: var(--accent-emerald); font-weight: 700;">Active</span>
+              </div>
+            </div>
+
+            <div class="process-card" style="padding: 20px;">
+              <div class="process-card-top">
+                <span class="badge-pill-status ready">Default Fast</span>
+                <span style="font-size: 11px; font-weight: 700; color: var(--accent-blue);">All Users</span>
+              </div>
+              <h3 style="font-size: 15px; font-weight: 800; margin: 12px 0 4px 0;">Gemini 2.5 Flash</h3>
+              <p style="font-size: 11.5px; color: var(--text-muted); line-height: 1.4;">
+                Low latency inline auto-complete, single prompt edits, free tier onboarding tokens.
+              </p>
+              <div class="process-card-footer" style="margin-top: 14px;">
+                <span>Quota: 10k Tokens</span>
+                <span style="color: var(--accent-blue); font-weight: 700;">Active</span>
+              </div>
+            </div>
+
+            <div class="process-card" style="padding: 20px;">
+              <div class="process-card-top">
+                <span class="badge-pill-status ready">BYOK Engine</span>
+                <span style="font-size: 11px; font-weight: 700; color: var(--accent-indigo);">Custom Key</span>
+              </div>
+              <h3 style="font-size: 15px; font-weight: 800; margin: 12px 0 4px 0;">Bring Your Own Key</h3>
+              <p style="font-size: 11.5px; color: var(--text-muted); line-height: 1.4;">
+                Users can add their own OpenAI / Claude / Gemini API keys in Desktop IDE. Tether zero tokens deducted.
+              </p>
+              <div class="process-card-footer" style="margin-top: 14px;">
+                <span>Quota: Unlimited</span>
+                <span style="color: var(--accent-indigo); font-weight: 700;">Supported</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Architecture & Security Note -->
+          <div style="background: rgba(16, 185, 129, 0.06); border: 1px solid rgba(16, 185, 129, 0.2); border-radius: 18px; padding: 20px;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+              <span style="font-size: 16px;">🛡️</span>
+              <h4 style="font-size: 13.5px; font-weight: 800; color: var(--text-dark);">How Model Security &amp; Access Works:</h4>
+            </div>
+            <ul style="font-size: 12px; color: var(--text-muted); line-height: 1.7; padding-left: 20px;">
+              <li><strong>Master Platform Keys:</strong> Shoora Tether's enterprise API keys are safely held on the central backend server (<code>shooratetherbackend/.env</code>). The raw key is never exposed to the client or browser.</li>
+              <li><strong>Tier Verification:</strong> When a user invokes AI in Desktop IDE, the request passes through <code>/api/ai/agent-chat</code> with the user's JWT token. Backend queries StackCP DB to confirm active <code>pro</code> status before approving requests.</li>
+              <li><strong>Admin Model Control:</strong> Any tier upgrade in this admin dashboard immediately unlocks the pro models on the user's Desktop IDE without requiring software reinstall.</li>
+            </ul>
+          </div>
+        </section>
+      </div>
+
+    </main>
+  </div>
+
+  <!-- Edit User Modal -->
+  <div id="editUserModalBackdrop" class="modal-backdrop">
+    <div class="modal-card-box">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+        <h3 class="modal-title-text" id="editModalHeaderTitle">Edit User Account</h3>
+        <button id="closeEditModalBtn" style="background: none; border: none; font-size: 22px; cursor: pointer; color: var(--text-muted);">&times;</button>
+      </div>
+
+      <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">
+        Update account details, subscription tier, and active/disabled access permissions.
+      </p>
+
+      <form id="editUserForm">
+        <input type="hidden" id="editUserId" />
+
+        <div class="modal-form-grid">
+          <div>
+            <label style="font-size: 11px; font-weight: 700; color: var(--text-dark); display: block; margin-bottom: 6px;" for="editUserName">DEVELOPER NAME</label>
+            <input type="text" id="editUserName" class="modal-input-field" placeholder="Full Name" />
+          </div>
+
+          <div>
+            <label style="font-size: 11px; font-weight: 700; color: var(--text-dark); display: block; margin-bottom: 6px;" for="editUserEmail">EMAIL ADDRESS</label>
+            <input type="email" id="editUserEmail" class="modal-input-field" placeholder="developer@cybershoora.com" required />
+          </div>
+
+          <div>
+            <label style="font-size: 11px; font-weight: 700; color: var(--text-dark); display: block; margin-bottom: 6px;" for="editUserPlan">SUBSCRIPTION TIER</label>
+            <select id="editUserPlan" class="form-select-input custom-select">
+              <option value="free">FREE - Standard Tier (10k Tokens)</option>
+              <option value="pro">PRO - Autonomous Developer (Unlimited Tab, 500k Tokens)</option>
+              <option value="team">TEAM - Collaborative AI Workspaces (2M Tokens)</option>
+              <option value="enterprise">ENTERPRISE - Dedicated Cloud VM &amp; Custom SLA</option>
+            </select>
+          </div>
+
+          <div>
+            <label style="font-size: 11px; font-weight: 700; color: var(--text-dark); display: block; margin-bottom: 6px;" for="editUserStatus">ACCOUNT STATUS</label>
+            <select id="editUserStatus" class="form-select-input custom-select">
+              <option value="active">Active (Full IDE &amp; Web Access)</option>
+              <option value="suspended">Suspended (Restricted)</option>
+              <option value="disabled">Disabled (Locked)</option>
+            </select>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 10px; margin-top: 18px;">
+          <button type="button" id="cancelEditModalBtn" class="btn-table-action" style="padding: 8px 16px;">Cancel</button>
+          <button type="submit" id="saveEditUserBtn" class="btn-create" style="padding: 8px 20px;">Save Changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Change Plan Modal -->
+  <div id="planModalBackdrop" class="modal-backdrop">
+    <div class="modal-card-box">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+        <h3 class="modal-title-text" style="margin-bottom: 0;">Upgrade / Change User Plan</h3>
+        <button id="closeModalBtn" style="background: none; border: none; font-size: 20px; cursor: pointer; color: var(--text-muted);">&times;</button>
+      </div>
+
+      <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 16px;">
+        Select subscription tier. The updated privileges apply immediately to the user's Shoora Tether Desktop IDE and Web accounts.
+      </p>
+
+      <div style="margin-bottom: 20px;">
+        <label style="font-size: 11px; font-weight: 700; color: var(--text-dark); display: block; margin-bottom: 6px;" for="planSelectInput">SUBSCRIPTION TIER</label>
+        <select id="planSelectInput" class="form-select-input custom-select">
+          <option value="free">FREE - Standard Tier (10k AI Tokens)</option>
+          <option value="pro">PRO - Autonomous Developer (Unlimited Tab, 500k Tokens)</option>
+          <option value="team">TEAM - Collaborative AI Workspaces (2M Tokens)</option>
+          <option value="enterprise">ENTERPRISE - Dedicated Cloud VM &amp; Custom SLA</option>
+        </select>
+      </div>
+
+      <div style="display: flex; justify-content: flex-end; gap: 10px;">
+        <button id="cancelPlanBtn" class="btn-table-action" style="padding: 8px 16px;">Cancel</button>
+        <button id="savePlanBtn" class="btn-create" style="padding: 8px 18px;">Update Plan</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Admin Login Overlay -->
+  <div id="loginOverlay" class="login-overlay-full" style="display: none;">
+    <div class="login-card-tablet">
+      <div style="display: flex; align-items: center; gap: 12px; margin-bottom: 20px;">
+        <img src="shooratetherlogo.png" alt="Shoora Tether" style="width: 40px; height: 40px; border-radius: 10px;" />
+        <div>
+          <h1 style="font-size: 17px; font-weight: 800; color: var(--text-dark);">SHOORA TETHER</h1>
+          <div style="font-size: 11.5px; color: var(--text-muted);">Enterprise Admin Portal</div>
+        </div>
+      </div>
+
+      <form id="loginForm">
+        <label style="font-size: 11.5px; font-weight: 700; color: var(--text-dark);" for="loginEmail">Admin Email</label>
+        <input type="email" id="loginEmail" class="login-input" placeholder="admin@cybershoora.com" required />
+
+        <label style="font-size: 11.5px; font-weight: 700; color: var(--text-dark);" for="loginPassword">Password</label>
+        <input type="password" id="loginPassword" class="login-input" placeholder="••••••••••••" required />
+
+        <button type="submit" id="loginSubmitBtn" class="btn-create" style="width: 100%; justify-content: center; padding: 11px; margin-top: 8px;">
+          Sign In to Dashboard
+        </button>
+
+        <div style="margin-top: 20px; padding-top: 16px; border-top: 1px solid var(--border-subtle); display: flex; justify-content: space-between; align-items: center;">
+          <span style="font-size: 11px; color: var(--text-muted);">Quick fill for test?</span>
+          <button type="button" id="fillCredsBtn" class="btn-table-action" style="font-size: 11px;">
+            Auto-fill Credentials
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script type="module" src="js/admin.js?v=4"></script>
+</body>
+</html>

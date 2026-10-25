@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1920 1080" width="100%" height="100%">
+  <defs>
+    <!-- Background Base Gradient -->
+    <linearGradient id="baseGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#EBEFF4" />
+      <stop offset="40%" stop-color="#DDE2E9" />
+      <stop offset="70%" stop-color="#D2D8E1" />
+      <stop offset="100%" stop-color="#E5E9EE" />
+    </linearGradient>
+
+    <!-- Ribbon 1 Gradient (Top Left to Center) -->
+    <linearGradient id="ribbon1" x1="0%" y1="0%" x2="100%" y2="80%">
+      <stop offset="0%" stop-color="#FFFFFF" stop-opacity="0.85" />
+      <stop offset="35%" stop-color="#CBD2DB" stop-opacity="0.6" />
+      <stop offset="70%" stop-color="#A8B2C0" stop-opacity="0.45" />
+      <stop offset="100%" stop-color="#F0F3F7" stop-opacity="0.8" />
+    </linearGradient>
+
+    <!-- Ribbon 2 Gradient (Top Right Fluid Fold) -->
+    <linearGradient id="ribbon2" x1="100%" y1="0%" x2="20%" y2="100%">
+      <stop offset="0%" stop-color="#F8FAFC" stop-opacity="0.9" />
+      <stop offset="45%" stop-color="#B8C2CE" stop-opacity="0.5" />
+      <stop offset="75%" stop-color="#9CA8B7" stop-opacity="0.35" />
+      <stop offset="100%" stop-color="#E2E7ED" stop-opacity="0.75" />
+    </linearGradient>
+
+    <!-- Ribbon 3 Gradient (Bottom Swirl) -->
+    <linearGradient id="ribbon3" x1="0%" y1="100%" x2="80%" y2="20%">
+      <stop offset="0%" stop-color="#939FAECE" stop-opacity="0.4" />
+      <stop offset="50%" stop-color="#EAEFF5" stop-opacity="0.7" />
+      <stop offset="100%" stop-color="#FFFFFF" stop-opacity="0.85" />
+    </linearGradient>
+
+    <!-- Ambient Shadow Filter -->
+    <filter id="softBlur" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="60" />
+    </filter>
+
+    <filter id="ribbonGlow" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="30" />
+    </filter>
+  </defs>
+
+  <!-- Canvas Background -->
+  <rect width="1920" height="1080" fill="url(#baseGrad)" />
+
+  <!-- Ambient Light Orbs -->
+  <circle cx="300" cy="150" r="380" fill="#FFFFFF" opacity="0.4" filter="url(#softBlur)" />
+  <circle cx="1600" cy="200" r="450" fill="#9DA9B7" opacity="0.3" filter="url(#softBlur)" />
+  <circle cx="1200" cy="900" r="400" fill="#FFFFFF" opacity="0.45" filter="url(#softBlur)" />
+  <circle cx="200" cy="850" r="350" fill="#A8B4C2" opacity="0.25" filter="url(#softBlur)" />
+
+  <!-- Layer 1: Giant Fluid Curved 3D Ribbons -->
+  <path d="M -100,200 C 400,-100 800,450 1400,100 C 1800,-100 2100,300 2000,700 C 1900,1050 1400,950 900,1150 C 400,1350 -100,900 -100,200 Z"
+        fill="url(#ribbon1)" />
+
+  <!-- Layer 2: Top Right Elegant Curved Ribbon Arc -->
+  <path d="M 800,-50 C 1100,50 1450,250 1700,50 C 1900,-80 2050,150 1950,550 C 1850,900 1350,750 1000,900 C 700,1050 750,450 800,-50 Z"
+        fill="url(#ribbon2)" opacity="0.75" />
+
+  <!-- Layer 3: Smooth Bottom-Left Swirl Ribbon Loop -->
+  <path d="M -50,600 C 250,550 500,750 400,950 C 300,1150 50,1100 -100,1000 C -200,900 -250,650 -50,600 Z"
+        fill="url(#ribbon3)" opacity="0.8" />
+
+  <!-- Layer 4: Diagonal Highlight Ribbon Stream -->
+  <path d="M 300,-100 C 700,200 1100,350 1600,150 C 1800,50 1950,200 1850,400 C 1750,600 1300,550 950,750 C 600,950 200,800 50,650 C -50,550 50,200 300,-100 Z"
+        fill="none" stroke="rgba(255, 255, 255, 0.45)" stroke-width="80" stroke-linecap="round" filter="url(#ribbonGlow)" />
+</svg>
