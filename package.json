@@ -8,8 +8,8 @@
     "start": "tsx src/server.ts",
     "start:dist": "node dist/server.js",
     "dev": "tsx watch src/server.ts",
-    "build:client": "tsc src/client/admin.ts --outDir public/js --target ES2020 --lib DOM,DOM.Iterable,ES2020 --module ESNext --skipLibCheck --ignoreConfig",
-    "build": "tsc && npm run build:client"
+    "build:client": "tsc -p tsconfig.client.json",
+    "build": "tsc -p tsconfig.json && npm run build:client"
   },
   "dependencies": {
     "@types/cors": "^2.8.19",

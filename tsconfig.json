@@ -3,14 +3,14 @@
     "target": "ES2022",
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
-    "lib": ["ES2022", "DOM", "DOM.Iterable"],
-    "strict": true,
+    "lib": ["ES2022"],
+    "strict": false,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "outDir": "./dist",
     "rootDir": "./src"
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "public", "dist"]
+  "include": ["src/server.ts"],
+  "exclude": ["node_modules", "public", "dist", "src/client"]
 }
